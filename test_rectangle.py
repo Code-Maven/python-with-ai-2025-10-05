@@ -1,185 +1,192 @@
-import unittest
-from unittest.mock import patch, call
+import pytest
+from unittest.mock import patch
 import sys
 import io
 from rectangle import calculate_rectangle_properties, main
 
 
-class TestRectangleProperties(unittest.TestCase):
-    """Test cases for the calculate_rectangle_properties function."""
-    
-    def test_calculate_rectangle_properties_positive_integers(self):
-        """Test calculation with positive integer values."""
-        area, perimeter = calculate_rectangle_properties(5, 3)
-        self.assertEqual(area, 15)
-        self.assertEqual(perimeter, 16)
-    
-    def test_calculate_rectangle_properties_positive_floats(self):
-        """Test calculation with positive float values."""
-        area, perimeter = calculate_rectangle_properties(2.5, 4.0)
-        self.assertEqual(area, 10.0)
-        self.assertEqual(perimeter, 13.0)
-    
-    def test_calculate_rectangle_properties_square(self):
-        """Test calculation with a square (equal width and height)."""
-        area, perimeter = calculate_rectangle_properties(4, 4)
-        self.assertEqual(area, 16)
-        self.assertEqual(perimeter, 16)
-    
-    def test_calculate_rectangle_properties_decimal_precision(self):
-        """Test calculation with decimal values requiring precision."""
-        area, perimeter = calculate_rectangle_properties(1.5, 2.3)
-        self.assertAlmostEqual(area, 3.45, places=2)
-        self.assertAlmostEqual(perimeter, 7.6, places=1)
-    
-    def test_calculate_rectangle_properties_large_numbers(self):
-        """Test calculation with large numbers."""
-        area, perimeter = calculate_rectangle_properties(1000, 2000)
-        self.assertEqual(area, 2000000)
-        self.assertEqual(perimeter, 6000)
-    
-    def test_calculate_rectangle_properties_small_numbers(self):
-        """Test calculation with very small numbers."""
-        area, perimeter = calculate_rectangle_properties(0.1, 0.2)
-        self.assertAlmostEqual(area, 0.02, places=3)
-        self.assertAlmostEqual(perimeter, 0.6, places=1)
+# Tests for calculate_rectangle_properties function
+
+def test_calculate_rectangle_properties_positive_integers():
+    """Test calculation with positive integer values."""
+    area, perimeter = calculate_rectangle_properties(5, 3)
+    assert area == 15
+    assert perimeter == 16
 
 
-class TestMainFunction(unittest.TestCase):
-    """Test cases for the main function."""
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_valid_input(self, mock_stdout, mock_input):
-        """Test main function with valid input."""
-        mock_input.side_effect = ['5', '3']
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Rectangle Calculator", output)
-        self.assertIn("Width: 5.0", output)
-        self.assertIn("Height: 3.0", output)
-        self.assertIn("Area: 15.0", output)
-        self.assertIn("Perimeter: 16.0", output)
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_negative_width(self, mock_stdout, mock_input):
-        """Test main function with negative width."""
-        mock_input.side_effect = ['-5', '3']
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Error: Width and height must be positive numbers.", output)
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_negative_height(self, mock_stdout, mock_input):
-        """Test main function with negative height."""
-        mock_input.side_effect = ['5', '-3']
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Error: Width and height must be positive numbers.", output)
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_zero_width(self, mock_stdout, mock_input):
-        """Test main function with zero width."""
-        mock_input.side_effect = ['0', '3']
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Error: Width and height must be positive numbers.", output)
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_zero_height(self, mock_stdout, mock_input):
-        """Test main function with zero height."""
-        mock_input.side_effect = ['5', '0']
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Error: Width and height must be positive numbers.", output)
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_invalid_width_input(self, mock_stdout, mock_input):
-        """Test main function with invalid (non-numeric) width input."""
-        mock_input.side_effect = ['abc', '3']
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Error: Please enter valid numbers for width and height.", output)
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_invalid_height_input(self, mock_stdout, mock_input):
-        """Test main function with invalid (non-numeric) height input."""
-        mock_input.side_effect = ['5', 'xyz']
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Error: Please enter valid numbers for width and height.", output)
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_decimal_input(self, mock_stdout, mock_input):
-        """Test main function with decimal input."""
-        mock_input.side_effect = ['2.5', '4.2']
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Width: 2.5", output)
-        self.assertIn("Height: 4.2", output)
-        self.assertIn("Area: 10.5", output)
-        self.assertIn("Perimeter: 13.4", output)
-    
-    @patch('builtins.input')
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_main_keyboard_interrupt(self, mock_stdout, mock_input):
-        """Test main function with keyboard interrupt."""
-        mock_input.side_effect = KeyboardInterrupt()
-        
-        main()
-        
-        output = mock_stdout.getvalue()
-        self.assertIn("Program interrupted by user.", output)
+def test_calculate_rectangle_properties_positive_floats():
+    """Test calculation with positive float values."""
+    area, perimeter = calculate_rectangle_properties(2.5, 4.0)
+    assert area == 10.0
+    assert perimeter == 13.0
 
 
-class TestEdgeCases(unittest.TestCase):
-    """Test cases for edge cases and boundary conditions."""
-    
-    def test_very_large_numbers(self):
-        """Test with very large numbers."""
-        area, perimeter = calculate_rectangle_properties(1e6, 1e6)
-        self.assertEqual(area, 1e12)
-        self.assertEqual(perimeter, 4e6)
-    
-    def test_very_small_numbers(self):
-        """Test with very small numbers."""
-        area, perimeter = calculate_rectangle_properties(1e-6, 1e-6)
-        self.assertAlmostEqual(area, 1e-12, places=15)
-        self.assertAlmostEqual(perimeter, 4e-6, places=10)
-    
-    def test_return_type(self):
-        """Test that function returns correct data types."""
-        result = calculate_rectangle_properties(5, 3)
-        self.assertIsInstance(result, tuple)
-        self.assertEqual(len(result), 2)
-        area, perimeter = result
-        self.assertIsInstance(area, (int, float))
-        self.assertIsInstance(perimeter, (int, float))
+def test_calculate_rectangle_properties_square():
+    """Test calculation with a square (equal width and height)."""
+    area, perimeter = calculate_rectangle_properties(4, 4)
+    assert area == 16
+    assert perimeter == 16
 
 
-if __name__ == '__main__':
-    # Run the tests
-    unittest.main(verbosity=2)
+def test_calculate_rectangle_properties_decimal_precision():
+    """Test calculation with decimal values requiring precision."""
+    area, perimeter = calculate_rectangle_properties(1.5, 2.3)
+    assert area == pytest.approx(3.45, abs=1e-2)
+    assert perimeter == pytest.approx(7.6, abs=1e-1)
+
+
+def test_calculate_rectangle_properties_large_numbers():
+    """Test calculation with large numbers."""
+    area, perimeter = calculate_rectangle_properties(1000, 2000)
+    assert area == 2000000
+    assert perimeter == 6000
+
+
+def test_calculate_rectangle_properties_small_numbers():
+    """Test calculation with very small numbers."""
+    area, perimeter = calculate_rectangle_properties(0.1, 0.2)
+    assert area == pytest.approx(0.02, abs=1e-3)
+    assert perimeter == pytest.approx(0.6, abs=1e-1)
+
+
+# Tests for main function
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_valid_input(mock_stdout, mock_input):
+    """Test main function with valid input."""
+    mock_input.side_effect = ['5', '3']
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Rectangle Calculator" in output
+    assert "Width: 5.0" in output
+    assert "Height: 3.0" in output
+    assert "Area: 15.0" in output
+    assert "Perimeter: 16.0" in output
+
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_negative_width(mock_stdout, mock_input):
+    """Test main function with negative width."""
+    mock_input.side_effect = ['-5', '3']
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Error: Width and height must be positive numbers." in output
+
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_negative_height(mock_stdout, mock_input):
+    """Test main function with negative height."""
+    mock_input.side_effect = ['5', '-3']
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Error: Width and height must be positive numbers." in output
+
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_zero_width(mock_stdout, mock_input):
+    """Test main function with zero width."""
+    mock_input.side_effect = ['0', '3']
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Error: Width and height must be positive numbers." in output
+
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_zero_height(mock_stdout, mock_input):
+    """Test main function with zero height."""
+    mock_input.side_effect = ['5', '0']
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Error: Width and height must be positive numbers." in output
+
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_invalid_width_input(mock_stdout, mock_input):
+    """Test main function with invalid (non-numeric) width input."""
+    mock_input.side_effect = ['abc', '3']
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Error: Please enter valid numbers for width and height." in output
+
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_invalid_height_input(mock_stdout, mock_input):
+    """Test main function with invalid (non-numeric) height input."""
+    mock_input.side_effect = ['5', 'xyz']
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Error: Please enter valid numbers for width and height." in output
+
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_decimal_input(mock_stdout, mock_input):
+    """Test main function with decimal input."""
+    mock_input.side_effect = ['2.5', '4.2']
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Width: 2.5" in output
+    assert "Height: 4.2" in output
+    assert "Area: 10.5" in output
+    assert "Perimeter: 13.4" in output
+
+
+@patch('builtins.input')
+@patch('sys.stdout', new_callable=io.StringIO)
+def test_main_keyboard_interrupt(mock_stdout, mock_input):
+    """Test main function with keyboard interrupt."""
+    mock_input.side_effect = KeyboardInterrupt()
+    
+    main()
+    
+    output = mock_stdout.getvalue()
+    assert "Program interrupted by user." in output
+
+
+# Edge case tests
+
+def test_very_large_numbers():
+    """Test with very large numbers."""
+    area, perimeter = calculate_rectangle_properties(1e6, 1e6)
+    assert area == 1e12
+    assert perimeter == 4e6
+
+
+def test_very_small_numbers():
+    """Test with very small numbers."""
+    area, perimeter = calculate_rectangle_properties(1e-6, 1e-6)
+    assert area == pytest.approx(1e-12, abs=1e-15)
+    assert perimeter == pytest.approx(4e-6, abs=1e-10)
+
+
+def test_return_type():
+    """Test that function returns correct data types."""
+    result = calculate_rectangle_properties(5, 3)
+    assert isinstance(result, tuple)
+    assert len(result) == 2
+    area, perimeter = result
+    assert isinstance(area, (int, float))
+    assert isinstance(perimeter, (int, float))
