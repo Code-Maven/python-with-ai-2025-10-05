@@ -1,11 +1,15 @@
-# Learning Python using AI tools
+# Learning Python using AI tools (in Hebrew)
 
 
 * [Slides](https://python.code-maven.com/python-using-ai/)
 * [Python Maven](https://python.code-maven.com/)
 * [Code Maven](https://code-maven.com/)
 * [Python in Israel](https://python.org.il/)
-* [Gabor Szabo](https://szabgab.com/)
+* [Gabor Szabo](https://szabgab.com/) and on [GitHub](https://github.com/szabgab/)
+
+## Video recordings
+
+* [Playlist](https://www.youtube.com/playlist?list=PLm2NBp4tb5F1_SWoHxXi5LIyCAzWivZZt)
 
 # Sessions 1-3
 
