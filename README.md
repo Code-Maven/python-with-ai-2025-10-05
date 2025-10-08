@@ -4,7 +4,8 @@
 * [Slides](https://python.code-maven.com/python-using-ai/)
 * [Python Maven](https://python.code-maven.com/)
 * [Code Maven](https://code-maven.com/)
-
+* [Python in Israel](https://python.org.il/)
+* [Gabor Szabo](https://szabgab.com/)
 
 # Sessions 1-3
 
