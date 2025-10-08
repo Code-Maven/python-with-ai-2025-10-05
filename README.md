@@ -1,3 +1,11 @@
+# Learning Python using AI tools
+
+
+* [Slides](https://python.code-maven.com/python-using-ai/)
+* [Python Maven](https://python.code-maven.com/)
+* [Code Maven](https://code-maven.com/)
+
+
 # Sessions 1-3
 
 ## Using GPT-4 in the inline chat
