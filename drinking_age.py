@@ -22,6 +22,7 @@ def check_drinking_age(age: int, country: str = "US", alcohol_type: str = "all")
         "AU": 18,    # Australia
         "BR": 18,    # Brazil
         "IN": 21,    # India (varies by state)
+        "PK": "prohibited",  # Pakistan - alcohol prohibited under Islamic law
     }
     
     country = country.upper()
@@ -30,8 +31,12 @@ def check_drinking_age(age: int, country: str = "US", alcohol_type: str = "all")
     if country not in drinking_ages:
         return False, f"Legal drinking age for {country} is not in our database."
     
+    # Handle Pakistan's special case (alcohol prohibited)
+    if country == "PK":
+        return False, f"Alcohol consumption is prohibited in {country} under Islamic law. There are limited exceptions for non-Muslims in certain licensed establishments."
+    
     # Handle Germany's special case
-    if country == "DE" and isinstance(drinking_ages[country], dict):
+    elif country == "DE" and isinstance(drinking_ages[country], dict):
         if alcohol_type == "beer_wine":
             legal_age = drinking_ages[country]["beer_wine"]
             alcohol_desc = "beer and wine"
@@ -83,7 +88,7 @@ def main() -> None:
             return
         
         # Get country (optional)
-        country_input = input("Enter your country code (US, UK, CA, DE, etc.) or press Enter for US: ").strip()
+        country_input = input("Enter your country code (US, UK, CA, DE, PK, etc.) or press Enter for US: ").strip()
         country = country_input if country_input else "US"
         
         # Get alcohol type for Germany

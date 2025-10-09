@@ -132,6 +132,33 @@ def test_check_drinking_age_very_old():
     assert "Yes, you can legally drink" in explanation
 
 
+def test_check_drinking_age_pakistan_prohibited():
+    """Test Pakistan where alcohol is prohibited."""
+    can_drink, explanation = check_drinking_age(25, "PK")
+    assert can_drink == False
+    assert "prohibited in PK under Islamic law" in explanation
+    assert "non-Muslims in certain licensed establishments" in explanation
+
+
+def test_check_drinking_age_pakistan_young():
+    """Test young person in Pakistan."""
+    can_drink, explanation = check_drinking_age(16, "PK")
+    assert can_drink == False
+    assert "prohibited in PK under Islamic law" in explanation
+
+
+def test_check_drinking_age_pakistan_case_insensitive():
+    """Test Pakistan with different case."""
+    can_drink1, explanation1 = check_drinking_age(30, "pk")
+    can_drink2, explanation2 = check_drinking_age(30, "PK")
+    can_drink3, explanation3 = check_drinking_age(30, "Pk")
+    
+    assert can_drink1 == can_drink2 == can_drink3 == False
+    assert "prohibited" in explanation1
+    assert "prohibited" in explanation2 
+    assert "prohibited" in explanation3
+
+
 # Tests for main function
 
 def test_main_legal_age_us():
@@ -353,3 +380,18 @@ def test_main_germany_default_choice():
             
             assert "Country: DE" in output
             assert "all types of alcohol" in output
+
+
+def test_main_pakistan_prohibited():
+    """Test main function with Pakistan (alcohol prohibited)."""
+    user_inputs = ["25", "PK"]
+    
+    with patch('builtins.input', side_effect=user_inputs):
+        with patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+            main()
+            output = mock_stdout.getvalue()
+            
+            assert "Age: 25" in output
+            assert "Country: PK" in output
+            assert "prohibited in PK under Islamic law" in output
+            assert "non-Muslims in certain licensed establishments" in output
