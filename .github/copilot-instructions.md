@@ -90,6 +90,7 @@ Every rectangle calculator must import and use the same `calculate_rectangle_pro
 6. **Maintain consistent error messaging** across all interfaces
 7. Add type annotation to every function.
 8. Make sure none of the function names are defined more than once.
+9. Write tests for every function.
 
 ## Testing Commands
 ```bash
