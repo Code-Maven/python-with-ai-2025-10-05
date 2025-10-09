@@ -1,9 +1,14 @@
+import Levenshtein
+
+
 def calculate_word_distance(word1: str, word2: str) -> int:
     """
     Calculate the Levenshtein distance between two words.
     
     The Levenshtein distance is the minimum number of single-character edits
     (insertions, deletions, or substitutions) required to change one word into another.
+    
+    Uses the optimized python-Levenshtein library for fast computation.
     
     Args:
         word1 (str): First word
@@ -16,35 +21,8 @@ def calculate_word_distance(word1: str, word2: str) -> int:
     word1 = word1.lower().strip()
     word2 = word2.lower().strip()
     
-    # Get lengths
-    len1, len2 = len(word1), len(word2)
-    
-    # Create a matrix to store distances
-    # matrix[i][j] will contain the distance between first i characters of word1
-    # and first j characters of word2
-    matrix = [[0] * (len2 + 1) for _ in range(len1 + 1)]
-    
-    # Initialize first row and column
-    for i in range(len1 + 1):
-        matrix[i][0] = i
-    for j in range(len2 + 1):
-        matrix[0][j] = j
-    
-    # Fill the matrix
-    for i in range(1, len1 + 1):
-        for j in range(1, len2 + 1):
-            if word1[i-1] == word2[j-1]:
-                # Characters match, no additional cost
-                matrix[i][j] = matrix[i-1][j-1]
-            else:
-                # Characters don't match, take minimum of three operations
-                matrix[i][j] = 1 + min(
-                    matrix[i-1][j],      # deletion
-                    matrix[i][j-1],      # insertion
-                    matrix[i-1][j-1]     # substitution
-                )
-    
-    return matrix[len1][len2]
+    # Use the optimized Levenshtein library
+    return Levenshtein.distance(word1, word2)
 
 
 def main() -> None:

@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "flet[all]>=0.28.3",
+    "python-Levenshtein>=0.25.1",
 ]
 
 [dependency-groups]
