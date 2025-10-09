@@ -31,12 +31,52 @@ def test_check_drinking_age_uk_legal():
     assert "legal age: 18" in explanation
 
 
-def test_check_drinking_age_germany_legal():
-    """Test legal drinking age in Germany (16)."""
-    can_drink, explanation = check_drinking_age(16, "DE")
+def test_check_drinking_age_germany_beer_wine_legal():
+    """Test legal drinking age for beer/wine in Germany (16)."""
+    can_drink, explanation = check_drinking_age(16, "DE", "beer_wine")
     assert can_drink == True
-    assert "Yes, you can legally drink" in explanation
+    assert "Yes, you can legally drink beer and wine" in explanation
     assert "legal age: 16" in explanation
+
+
+def test_check_drinking_age_germany_spirits_legal():
+    """Test legal drinking age for spirits in Germany (18)."""
+    can_drink, explanation = check_drinking_age(18, "DE", "spirits")
+    assert can_drink == True
+    assert "Yes, you can legally drink spirits" in explanation
+    assert "legal age: 18" in explanation
+
+
+def test_check_drinking_age_germany_spirits_underage():
+    """Test underage for spirits in Germany."""
+    can_drink, explanation = check_drinking_age(17, "DE", "spirits")
+    assert can_drink == False
+    assert "you must wait 1 more year" in explanation
+    assert "spirits" in explanation
+
+
+def test_check_drinking_age_germany_all_alcohol_17():
+    """Test 17-year-old with all alcohol types in Germany."""
+    can_drink, explanation = check_drinking_age(17, "DE", "all")
+    assert can_drink == True
+    assert "beer and wine" in explanation
+    assert "must wait 1 more year for spirits" in explanation
+
+
+def test_check_drinking_age_germany_all_alcohol_18():
+    """Test 18-year-old with all alcohol types in Germany."""
+    can_drink, explanation = check_drinking_age(18, "DE", "all")
+    assert can_drink == True
+    assert "all types of alcohol" in explanation
+    assert "beer/wine: 16+, spirits: 18+" in explanation
+
+
+def test_check_drinking_age_germany_all_alcohol_underage():
+    """Test underage for all alcohol in Germany."""
+    can_drink, explanation = check_drinking_age(15, "DE", "all")
+    assert can_drink == False
+    assert "you must wait 1 more year" in explanation
+    assert "beer/wine" in explanation
 
 
 def test_check_drinking_age_case_insensitive():
@@ -151,7 +191,7 @@ def test_main_young_person_advisory():
 
 def test_main_teen_advisory():
     """Test main function with teenager."""
-    user_inputs = ["17", "DE"]  # Legal in Germany but still gets advisory
+    user_inputs = ["17", "DE", "1"]  # Legal for beer/wine in Germany but still gets advisory
     
     with patch('builtins.input', side_effect=user_inputs):
         with patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
@@ -221,8 +261,8 @@ def test_main_invalid_country():
 
 def test_main_various_countries():
     """Test main function with different countries."""
-    # Test Germany (lower drinking age)
-    user_inputs = ["17", "DE"]
+    # Test Germany (lower drinking age for beer/wine)
+    user_inputs = ["17", "DE", "1"]  # Choose beer/wine option
     
     with patch('builtins.input', side_effect=user_inputs):
         with patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
@@ -272,3 +312,44 @@ def test_main_whitespace_handling():
             assert "Age: 21" in output
             assert "Country: US" in output
             assert "Yes, you can legally drink" in output
+
+
+def test_main_germany_spirits_choice():
+    """Test main function with Germany spirits choice."""
+    user_inputs = ["17", "DE", "2"]  # Choose spirits option
+    
+    with patch('builtins.input', side_effect=user_inputs):
+        with patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+            main()
+            output = mock_stdout.getvalue()
+            
+            assert "Country: DE" in output
+            assert "you must wait 1 more year" in output
+            assert "spirits" in output
+
+
+def test_main_germany_all_alcohol_choice():
+    """Test main function with Germany all alcohol choice."""
+    user_inputs = ["17", "DE", "3"]  # Choose all alcohol types
+    
+    with patch('builtins.input', side_effect=user_inputs):
+        with patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+            main()
+            output = mock_stdout.getvalue()
+            
+            assert "Country: DE" in output
+            assert "beer and wine" in output
+            assert "must wait 1 more year for spirits" in output
+
+
+def test_main_germany_default_choice():
+    """Test main function with Germany default choice (empty input)."""
+    user_inputs = ["18", "DE", ""]  # Empty choice defaults to all
+    
+    with patch('builtins.input', side_effect=user_inputs):
+        with patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+            main()
+            output = mock_stdout.getvalue()
+            
+            assert "Country: DE" in output
+            assert "all types of alcohol" in output
