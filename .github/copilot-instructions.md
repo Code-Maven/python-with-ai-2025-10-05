@@ -93,7 +93,8 @@ Every rectangle calculator must import and use the same `calculate_rectangle_pro
 
 ## Testing Commands
 ```bash
-uv run pytest                    # Run all tests
+uv run pytest                    # Run a
+ll tests
 uv run python rectangle.py       # Interactive CLI
 uv run python rectangle_argv.py 5 3  # Command-line usage
 uv run python rectangle_gui.py   # Tkinter GUI
