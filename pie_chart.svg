@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" 
+     xmlns="http://www.w3.org/2000/svg">
+  
+  <!-- Title -->
+  <text x="200" y="30" text-anchor="middle" 
+        font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="#333">Pie Chart</text>
+  
+  <!-- Pie chart segments -->
+  <path d="M 200 200 L 200.0 67.0 A 133 133 0 0 1 323.96885922502446 151.8261280106522 Z" fill="#FF6B6B" stroke="white" stroke-width="2">
+    <title>Java: 17.0 (19.1%)</title>
+  </path>
+  <path d="M 200 200 L 323.96885922502446 151.8261280106522 A 133 133 0 0 1 275.10617493061653 309.763666517166 Z" fill="#4ECDC4" stroke="white" stroke-width="2">
+    <title>Python: 19.0 (21.3%)</title>
+  </path>
+  <path d="M 200 200 L 275.10617493061653 309.763666517166 A 133 133 0 0 1 86.41528115519718 269.1918466652473 Z" fill="#45B7D1" stroke="white" stroke-width="2">
+    <title>Perl: 23.0 (25.8%)</title>
+  </path>
+  <path d="M 200 200 L 86.41528115519718 269.1918466652473 A 133 133 0 0 1 113.7126908931705 98.78982122779124 Z" fill="#96CEB4" stroke="white" stroke-width="2">
+    <title>Rust: 20.0 (22.5%)</title>
+  </path>
+  <path d="M 200 200 L 113.7126908931705 98.78982122779124 A 133 133 0 0 1 199.99999999999997 67.0 Z" fill="#FFEAA7" stroke="white" stroke-width="2">
+    <title>C: 10.0 (11.2%)</title>
+  </path>
+
+  <!-- Legend -->
+  <rect x="373" y="140" width="15" height="15" 
+        fill="#FF6B6B" stroke="#333" stroke-width="1"/>
+  <text x="393" y="152" 
+        font-family="Arial, sans-serif" font-size="12" fill="#333">
+    Java: 17.0 (19.1%)
+  </text>
+  <rect x="373" y="165" width="15" height="15" 
+        fill="#4ECDC4" stroke="#333" stroke-width="1"/>
+  <text x="393" y="177" 
+        font-family="Arial, sans-serif" font-size="12" fill="#333">
+    Python: 19.0 (21.3%)
+  </text>
+  <rect x="373" y="190" width="15" height="15" 
+        fill="#45B7D1" stroke="#333" stroke-width="1"/>
+  <text x="393" y="202" 
+        font-family="Arial, sans-serif" font-size="12" fill="#333">
+    Perl: 23.0 (25.8%)
+  </text>
+  <rect x="373" y="215" width="15" height="15" 
+        fill="#96CEB4" stroke="#333" stroke-width="1"/>
+  <text x="393" y="227" 
+        font-family="Arial, sans-serif" font-size="12" fill="#333">
+    Rust: 20.0 (22.5%)
+  </text>
+  <rect x="373" y="240" width="15" height="15" 
+        fill="#FFEAA7" stroke="#333" stroke-width="1"/>
+  <text x="393" y="252" 
+        font-family="Arial, sans-serif" font-size="12" fill="#333">
+    C: 10.0 (11.2%)
+  </text>
+
+</svg>
