@@ -12,6 +12,7 @@ def calculate_pie_chart_segments(data: List[Tuple[str, float]]) -> List[Dict]:
     Returns:
         List of dictionaries with segment information
     """
+    print(data)
     total = sum(value for _, value in data)
     if total == 0:
         raise ValueError("Total value cannot be zero")
