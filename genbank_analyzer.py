@@ -61,6 +61,8 @@ def get_genbank_info(file_path: str) -> dict:
     info = {}
     
     try:
+        # file = open(file_path, 'r', encoding='utf-8')
+        # file.close()ORIGIN
         with open(file_path, 'r', encoding='utf-8') as file:
             for line in file:
                 line = line.strip()
