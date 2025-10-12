@@ -9,6 +9,7 @@ dependencies = [
     "python-Levenshtein>=0.25.1",
     "rapidfuzz>=3.14.0",
     "editdistance>=0.8.1",
+    "biopython>=1.85",
 ]
 
 [dependency-groups]
