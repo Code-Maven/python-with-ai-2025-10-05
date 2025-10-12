@@ -6,22 +6,6 @@ This is a Python educational project focused on learning Python through AI-assis
 ## Architecture & Core Patterns
 
 ### Single-Function Core Pattern
-All rectangle calculators share the same core function:
-```python
-def calculate_rectangle_properties(width, height):
-    area = width * height
-    perimeter = 2 * (width + height)
-    return area, perimeter
-```
-**Key**: Always reuse this exact function signature across all rectangle implementations to maintain consistency.
-
-### Progressive UI Implementations
-The project follows a specific progression pattern:
-1. `rectangle.py` - Interactive CLI with input validation
-2. `rectangle_argv.py` - Command-line arguments using argparse
-3. `rectangle_gui.py` - Tkinter GUI with ttk styling
-4. `rectangle_flet.py` - Modern Flet-based GUI (multi-implementation file)
-5. `rectangle_flet_fixed.py` - Refined Flet implementation
 
 ## Development Workflow
 
@@ -33,7 +17,6 @@ The project follows a specific progression pattern:
 
 ### Testing Approach
 - Uses **pytest with plain functions** (not unittest classes)
-- Test file: `test_rectangle.py` 
 - Pattern: Test both the core function and main() with mocking
 - Example test structure:
 ```python
@@ -43,16 +26,7 @@ def test_calculate_rectangle_properties_positive_integers():
     assert perimeter == 16
 ```
 
-### GUI Framework Progression
-1. **Tkinter** (`rectangle_gui.py`) - Basic GUI, class-based structure
-2. **Flet** (`rectangle_flet*.py`) - Modern web-based GUI, function-based structure
-
 ## Project-Specific Conventions
-
-### File Naming Pattern
-- Base functionality: `rectangle.py`
-- Variants: `rectangle_<interface_type>.py` (argv, gui, flet)
-- Fixed versions: `rectangle_<type>_fixed.py`
 
 ### Error Handling Standards
 - CLI: Try-catch with user-friendly error messages
@@ -67,37 +41,23 @@ def test_calculate_rectangle_properties_positive_integers():
 ## Key Integration Points
 
 ### Shared Core Logic
-Every rectangle calculator must import and use the same `calculate_rectangle_properties()` function to ensure consistent calculations across all interfaces.
-
-### GUI State Management
-- Flet implementations use nested functions for event handlers
-- Tkinter uses class methods for state management
-- Both patterns include clear/reset functionality
 
 ### Command-Line Interface
-`rectangle_argv.py` uses argparse with:
-- Positional arguments for width/height
-- Optional verbose flag (`-v, --verbose`)
-- Built-in help and validation
+- use argparse
 
 ## Development Guidelines
 
 1. **Reuse the core calculation function** - never reimplement the math
-2. **Follow the progressive complexity pattern** when adding new interfaces
-3. **Use `uv run` for all Python execution** 
-4. **Write pytest functions, not unittest classes**
-5. **Include comprehensive input validation** in all implementations
-6. **Maintain consistent error messaging** across all interfaces
-7. Add type annotation to every function.
-8. Make sure none of the function names are defined more than once.
-9. Write tests for every function.
+1. **Use `uv run` for all Python execution**
+1. **Write pytest functions, not unittest classes**
+1. **Include comprehensive input validation** in all implementations
+1. **Maintain consistent error messaging** across all interfaces
+1. Add type annotation to every function.
+1. Make sure none of the function names are defined more than once.
+1. Write tests for every function.
 
 ## Testing Commands
+
 ```bash
 uv run pytest                    # Run a
-ll tests
-uv run python rectangle.py       # Interactive CLI
-uv run python rectangle_argv.py 5 3  # Command-line usage
-uv run python rectangle_gui.py   # Tkinter GUI
-uv run python rectangle_flet.py  # Modern Flet GUI
 ```
